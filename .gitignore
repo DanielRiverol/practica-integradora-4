@@ -3,3 +3,4 @@ node_modules
 readme.md
 test
 .env
+.DS_Store
