@@ -12,7 +12,7 @@ import passport from "passport";
 import initializePassport from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
 import config from "./config/config.js";
-
+import addLogger from "./middleware/logger.middleware.js";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUiExpress from "swagger-ui-express";
 
@@ -25,7 +25,16 @@ const connection = mongoose.connect(config.mongo.URL);
  */
 
 const swaggerOptions = {
- //logica a implementar
+  //logica a implementar
+  definition: {
+    openapi: "3.0.1",
+    info: {
+      title: "API Cursos",
+      version: "1.0.0",
+      description: "Documentacion de la API de Cursos",
+    },
+  },
+  apis: [`${__dirname}/docs/**/*.yaml`],
 };
 const specs = swaggerJsdoc(swaggerOptions);
 
@@ -42,7 +51,7 @@ app.set("view engine", "handlebars");
 app.use(express.static(__dirname + "/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(addLogger);
 initializePassport();
 app.use(passport.initialize());
 app.use(cookieParser());

@@ -1,0 +1,47 @@
+components:
+  schemas:
+    Courses:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier of the course
+        title:
+          type: string
+          description: Titulo del curso
+        description:
+          type: string
+          description: Descripcion del curso
+        teacher:
+          type: string
+          description: Nombre del profe
+        students:
+          type: array
+          items:
+            type: string
+            description: Id del estudiante
+          description: Estudiantes inscritos al curso
+      example:
+        _id: 5e76c8625014024964000001
+        title: Curso de React
+        description: Curso de React desde cero
+        teacher: Mariano
+        students: []
+paths:
+  /api/courses/:
+    get:
+     summary: Lista de cursos
+     description: Lista de cursos
+     tags:
+      - Courses
+    responses:
+      '200':
+        description: Lista de cursos
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Courses'
+    
+         

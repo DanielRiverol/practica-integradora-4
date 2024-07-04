@@ -8,13 +8,15 @@ const getUsers = async (req, res) => {
       status: "error",
       error: "Couldn't get users due to internal error",
     });
-
+//log
+req.logger.info(`Getting all users: ${users}`);
   res.send({ status: "success", payload: users });
 };
 
 const createUser = async (req, res) => {
   let { first_name, last_name, dni, email, birthDate, gender } = req.body;
   if (!first_name || !last_name || !dni || !email || !birthDate) {
+    req.logger.warn("Incomplete values");
     return res
       .status(400)
       .send({ status: "error", error: "Incomplete values" });
